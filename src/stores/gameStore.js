@@ -140,7 +140,7 @@ const useGameStore = create((set, get) => ({
   responseResetGame: () => {
     const socket = get().socket;
 
-    socket.on("game-restarted", (data) => {
+    socket.on("game-restarted", () => {
       console.log("came");
       set({
         gameCurrentState: {

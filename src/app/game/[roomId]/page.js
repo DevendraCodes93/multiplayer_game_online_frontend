@@ -26,71 +26,6 @@ const calculateWinner = (squares) => {
   return { winner: null, line: null };
 };
 
-const triggerSadEmojiParticles = () => {
-  if (typeof window === "undefined") return;
-
-  const end = Date.now() + 3000; // 3 seconds duration
-  const sadEmojis = ["😢", "😭", "💔", "😔", "😞", "😿"]; // sad emojis
-
-  const frame = () => {
-    // Small sad emoji particles from center
-    confetti({
-      particleCount: 3,
-      angle: 90,
-      spread: 45,
-      origin: { x: 0.5, y: 0.5 },
-      gravity: 0.8,
-      decay: 0.9,
-      scalar: 0.8,
-      shapes: ["text"],
-      shapeOptions: {
-        text: {
-          value: sadEmojis[Math.floor(Math.random() * sadEmojis.length)],
-        },
-      },
-    });
-
-    // Gentle side emissions
-    confetti({
-      particleCount: 2,
-      angle: 45,
-      spread: 30,
-      origin: { x: 0.2, y: 0.4 },
-      gravity: 0.6,
-      decay: 0.95,
-      scalar: 0.6,
-      shapes: ["text"],
-      shapeOptions: {
-        text: {
-          value: sadEmojis[Math.floor(Math.random() * sadEmojis.length)],
-        },
-      },
-    });
-
-    confetti({
-      particleCount: 2,
-      angle: 135,
-      spread: 30,
-      origin: { x: 0.8, y: 0.4 },
-      gravity: 0.6,
-      decay: 0.95,
-      scalar: 0.6,
-      shapes: ["text"],
-      shapeOptions: {
-        text: {
-          value: sadEmojis[Math.floor(Math.random() * sadEmojis.length)],
-        },
-      },
-    });
-
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
-    }
-  };
-
-  frame();
-};
-
 // Sad particles configuration with red particles
 const sadParticlesConfig = {
   background: {
@@ -218,7 +153,6 @@ const sadEmojiParticlesConfig = {
 const VSPage = () => {
   const {
     connectSocket,
-    gameState,
     listenToMoves,
     makeMoveOnServer,
     gameCurrentState,
@@ -236,7 +170,6 @@ const VSPage = () => {
   const [vibrateTurn, setVibrateTurn] = useState(false);
   const [loserTriggered, setLoserTriggered] = useState(false);
   const [showSadEnvironment, setShowSadEnvironment] = useState(false);
-  const [isLoser, setIsLoser] = useState(false);
 
   const { winner, line: winningLine } = calculateWinner(squares);
   const isDraw = squares.every(Boolean) && !winner;
@@ -275,7 +208,7 @@ const VSPage = () => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [connectSocket, listenToMoves, responseResetGame]);
 
   useEffect(() => {
     if (gameCurrentState) {
@@ -358,7 +291,7 @@ const VSPage = () => {
 
               oscillator.start();
               oscillator.stop(audioContext.currentTime + 1);
-            } catch (error) {
+            } catch {
               console.log("Audio not supported");
             }
           }
@@ -369,9 +302,8 @@ const VSPage = () => {
     } else {
       setLoserTriggered(false);
       setShowSadEnvironment(false);
-      setIsLoser(false);
     }
-  }, [winner, socketId]);
+  }, [winner, socketId, loserTriggered, oPlayer, xPlayer]);
 
   const makeMove = (i) => {
     if (winner || squares[i]) return;
@@ -595,7 +527,7 @@ const VSPage = () => {
                     repeatType: "reverse",
                   }}
                 >
-                  
+                  😞
                 </motion.span>
                 <span className="text-red-400 font-semibold">
                   You Lost... Better luck next time!
@@ -613,7 +545,7 @@ const VSPage = () => {
         ) : isDraw ? (
           <div className="flex items-center gap-2">
             <span className="text-2xl">🤝</span>
-            <span className="text-blue-400">It's a Draw!</span>
+            <span className="text-blue-400">It&apos;s a Draw!</span>
           </div>
         ) : (
           <motion.div
@@ -629,7 +561,7 @@ const VSPage = () => {
               ⚡
             </motion.span>
             <span className="text-green-400">
-              {currentPlayer?.name || "Player"}'s Turn
+              {currentPlayer?.name || "Player"}&apos;s Turn
             </span>
           </motion.div>
         )}

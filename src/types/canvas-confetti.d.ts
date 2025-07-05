@@ -3,7 +3,17 @@ declare module "canvas-confetti" {
     particleCount?: number;
     spread?: number;
     origin?: { x?: number; y?: number };
-    [key: string]: any;
+    colors?: string[];
+    angle?: number;
+    gravity?: number;
+    decay?: number;
+    scalar?: number;
+    shapes?: string[];
+    shapeOptions?: {
+      text?: {
+        value?: string;
+      };
+    };
   }
 
   function confetti(options?: ConfettiOptions): Promise<void>;
