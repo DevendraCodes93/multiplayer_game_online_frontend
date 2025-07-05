@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Grid Wars",
     images: [
       {
-        url: "/og-image.png", // ✅ Make sure this image exists in your /public folder
+        url: "/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Grid Wars - Online Tic Tac Toe",
