@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+// next.config.ts
 
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    appDir: true, // Enables /app directory routing (App Router)
+  },
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
 export default nextConfig;
