@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { io } from "socket.io-client";
-const BASE_URL = "https://gridwars-five.vercel.app";
+const BASE_URL = "https://multiplayer-game-backend-swjz.onrender.com";
 const useGameStore = create((set, get) => ({
   socket: null,
   gameId: null,
