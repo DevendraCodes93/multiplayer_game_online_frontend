@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axiosInstance from "../lib/axios";
 import { io } from "socket.io-client";
 import { join } from "path";
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://gridwars-five.vercel.app";
 const useGameStore = create((set, get) => ({
   socket: null,
   gameId: null,
