@@ -370,7 +370,7 @@ const VSPage = () => {
         transition={{ duration: 0.8 }}
       >
         <motion.div
-          className={`flex flex-col items-center px-5 py-4 rounded-2xl backdrop-blur-sm border ${
+          className={`flex flex-col items-center px-7 py-4 rounded-2xl backdrop-blur-sm border ${
             xIsNext
               ? "bg-blue-600/20 border-blue-500/50"
               : "bg-gray-800/40 border-gray-600/30"
