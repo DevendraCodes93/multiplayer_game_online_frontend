@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Square, { SquareProps } from "./Square";
+import Square from "./Square";
 
 interface BoardProps {
   squares: (string | null)[];
